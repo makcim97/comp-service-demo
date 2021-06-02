@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Обслуживание компьютерной техники</title>
+    <style>
+        @import url("css/bootstrap.css");
+        @import url("css/bootstrap-grid.css");
+        @import url("css/bootstrap-reboot.css");
+        @import url("css/bootstrap-grid.min.css");
+        @import url("css/bootstrap-utilities.css");
+        @import url("css/bootstrap.rtl.css");
+        @import url("css/bootstrap.min.css");
+        @import url("js/bootstrap.bundle.js");
+        @import url("js/bootstrap.js");
+        @import url("js/bootstrap.esm.js");
+        @import url("js/bootstrap.min.js");
+
+    </style>
+    <script>
+        let str = window.location.href
+        console.log('window info:', str)
+        let res = str.split("/")
+        ip_adress = res[2]
+        console.log('ip:', ip_adress)
+        var ws = new WebSocket("ws://" + ip_adress + "/Requests") //адрес сокета для получения
+        // информации о пользователях
+        ws.onopen = function() {
+            console.log('connection established')
+            ws.send("GetRequests") //отправляем запрос серверу на получение пользователей
+        }
+        ws.onclose = function() {
+            console.log('connection closed')
+        }
+        ws.onerror = function(err) {
+            console.log('error: ', err)
+        }
+        ws.onmessage = function(message) {
+            var receivedData = message.data
+            console.log("receivedData = ", receivedData)
+            var msg = JSON.parse(receivedData) //преобразуем JSON-массив в обычный массив
+            setUsersTable(msg) // ф-ия для заполнения таблицы с аккаунтами, код ниже
+        }
+
+    </script>
+    <script>
+        function setUsersTable(usersArray) {
+            console.log(usersArray.length)
+            var table = document.getElementById("requestTable")
+            for (var i = 0; i < usersArray.length; i++) {
+                var row = table.insertRow(1 + i)
+                var cell1 = row.insertCell(0)
+                cell1.innerHTML = usersArray[i].FIO
+                let logins = new Object();
+                logins[i] = usersArray[i].FIO
+                cell1 = row.insertCell(1)
+                cell1.innerHTML = usersArray[i].type
+                cell1 = row.insertCell(2)
+                cell1.innerHTML = usersArray[i].model
+                cell1 = row.insertCell(3)
+                cell1.innerHTML = usersArray[i].broken
+                cell1 = row.insertCell(4)
+                cell1.innerHTML = usersArray[i].phone
+                cell1 = row.insertCell(5)
+                cell1.innerHTML = usersArray[i].comment
+                cell1 = row.insertCell(6)
+            }
+        }
+
+    </script>
+</head>
+<div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</div>
+
+<body style="background-color:floralwhite;">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size:24px;">
+  <a class="navbar-brand" style="font-size:24px;" href="#">Навигация</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="AdminIndex.html">Домашняя страница</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Информация
+        </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="About.html">О компании</a>
+                        <a class="dropdown-item" href="AdminContact.html">Контакты</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"></a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Admin.html">Администратор</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Logout?login=Admin"></a>
+                </li>
+            </ul>
+            <!--
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+-->
+        </div>
+        <span class="navbar-text" style="margin-right:10px;">Добро пожаловать, Администратор!</span>
+   <ul class="navbar-nav mr-auto">
+   <li class="nav-item">
+    <a  class="nav-link" style="margin-right:20px;" href="/Logout?login=Admin">Выйти</a>
+	</li>
+	</ul>
+    </nav>
+   <div style="height:71px; background-color: papayawhip; padding-top: 20px;">
+        <p class="h1" style="margin-left:20px; margin-top:0px; font-style:oblique; font-size:30px;">Обслуживание компьютерной техники</p>
+        <hr/>
+    </div>
+     <div style="width:90%; height:90%; background-color: white; margin-left: 60px; border: 1px solid #e9d9e9; box-shadow: 0 0 3px black; margin-top: 35px; margin-bottom: 35px; padding-bottom:50px;">
+    <h3 align="center" style="margin-top: 30px;">Запросы пользователей </h3>
+    <table border="1" cellpadding="5" align="center" id="requestTable" class="table table-hover" style="width:85%; border-width:3px; margin-top:30px; background-color:white; padding:30px;">
+        <caption>
+
+        </caption>
+        <thread>
+            <tr>
+                <th>ФИО</th>
+                <th>Производитель</th>
+                <th>Модель</th>
+                <th>Поломка</th>
+                <th>Контактный телефон</th>
+                <th>Комментарий</th>
+                <th></th>
+            </tr>
+        </thread>
+        <tbody>
+            <tr hidden>
+                <td> </td>
+                <td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">Добавить пользователя</button></td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        </tbody>
+
+    </table>
+   
+    </div>
+</body>
+
+</html>

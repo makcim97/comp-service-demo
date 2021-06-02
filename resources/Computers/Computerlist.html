@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Обслуживание компьютерной техники</title>
+    <style>
+        @import url("css/bootstrap.css");
+        @import url("css/bootstrap-grid.css");
+        @import url("css/bootstrap-reboot.css");
+        @import url("css/bootstrap-grid.min.css");
+        @import url("css/bootstrap-utilities.css");
+        @import url("css/bootstrap.rtl.css");
+        @import url("css/bootstrap.min.css");
+        @import url("js/bootstrap.bundle.js");
+        @import url("js/bootstrap.js");
+        @import url("js/bootstrap.esm.js");
+        @import url("js/bootstrap.min.js");
+
+    </style>
+     <script>
+        let str = window.location.href
+        console.log('window info:', str)
+        let res = str.split("/")
+        ip_adress = res[2]
+        console.log('ip:', ip_adress)
+        var ws = new WebSocket("ws://" + ip_adress + "/Computers") //адрес сокета для получения
+        var ws2 = new WebSocket("ws://" + ip_adress + "/Notebooks") //адрес сокета для получения
+        var ws3 = new WebSocket("ws://" + ip_adress + "/Phones") //адрес сокета для получения
+        // информации о пользователях
+        ws.onopen = function() {
+            console.log('connection established')
+            ws.send("GetComputers") //отправляем запрос серверу на получение пользователей
+        }
+        ws2.onopen = function() {
+            console.log('connection established')
+            ws2.send("GetNotebooks") //отправляем запрос серверу на получение пользователей
+        }
+        ws3.onopen = function() {
+            console.log('connection established')
+            ws3.send("GetPhones") //отправляем запрос серверу на получение пользователей
+        }
+        ws.onclose = function() {
+            console.log('connection closed')
+        }
+        ws2.onclose = function() {
+            console.log('connection closed')
+        }
+        ws3.onclose = function() {
+            console.log('connection closed')
+        }
+        ws.onerror = function(err) {
+            console.log('error: ', err)
+        }
+        ws2.onerror = function(err) {
+            console.log('error: ', err)
+        }
+        ws3.onerror = function(err) {
+            console.log('error: ', err)
+        }
+        ws.onmessage = function(message) {
+            var receivedData = message.data
+            console.log("receivedData = ", receivedData)
+            var msg = JSON.parse(receivedData) //преобразуем JSON-массив в обычный массив
+            setComputersTable(msg) // ф-ия для заполнения таблицы с аккаунтами, код ниже
+        }
+        ws2.onmessage = function(message) {
+            var receivedData = message.data
+            console.log("receivedData = ", receivedData)
+            var msg = JSON.parse(receivedData) //преобразуем JSON-массив в обычный массив
+            setNotebooksTable(msg) // ф-ия для заполнения таблицы с аккаунтами, код ниже
+        }
+        ws3.onmessage = function(message) {
+            var receivedData = message.data
+            console.log("receivedData = ", receivedData)
+            var msg = JSON.parse(receivedData) //преобразуем JSON-массив в обычный массив
+            setPhonesTable(msg) // ф-ия для заполнения таблицы с аккаунтами, код ниже
+        }
+
+    </script>
+    <script>
+        function setComputersTable(computersArray) {
+            console.log(computersArray.length)
+            var table = document.getElementById("computersTable")
+            for (var i = 0; i < computersArray.length; i++) {
+                var row = table.insertRow(1 + i)
+                var cell1 = row.insertCell(0)
+                cell1.innerHTML = computersArray[i].model
+                let models = new Object();
+                models[i] = computersArray[i].model
+                cell1 = row.insertCell(1)
+                cell1.innerHTML = computersArray[i].OS
+                cell1 = row.insertCell(2)
+                cell1.innerHTML = computersArray[i].processor
+                cell1 = row.insertCell(3)
+                cell1.innerHTML = computersArray[i].price
+                cell1 = row.insertCell(4)
+            }
+        }
+
+    </script>
+    <script>
+        function setNotebooksTable(computersArray) {
+            console.log(computersArray.length)
+            var table = document.getElementById("notebooksTable")
+            for (var i = 0; i < computersArray.length; i++) {
+                var row = table.insertRow(1 + i)
+                var cell1 = row.insertCell(0)
+                cell1.innerHTML = computersArray[i].model
+                let models = new Object();
+                models[i] = computersArray[i].model
+                cell1 = row.insertCell(1)
+                cell1.innerHTML = computersArray[i].OS
+                cell1 = row.insertCell(2)
+                cell1.innerHTML = computersArray[i].processor
+                cell1 = row.insertCell(3)
+                cell1.innerHTML = computersArray[i].price
+                cell1 = row.insertCell(4)
+            }
+        }
+
+    </script>
+    <script>
+        function setPhonesTable(phonesArray) {
+            console.log(phonesArray.length)
+            var table = document.getElementById("phonesTable")
+            for (var i = 0; i < phonesArray.length; i++) {
+                var row = table.insertRow(1 + i)
+                var cell1 = row.insertCell(0)
+                cell1.innerHTML = phonesArray[i].model
+                let models = new Object();
+                models[i] = phonesArray[i].model
+                cell1 = row.insertCell(1)
+                cell1.innerHTML = phonesArray[i].company
+                cell1 = row.insertCell(2)
+                cell1.innerHTML = phonesArray[i].display
+                cell1 = row.insertCell(3)
+                cell1.innerHTML = phonesArray[i].price
+                cell1 = row.insertCell(4)
+            }
+        }
+
+    </script>
+</head>
+<div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</div>
+
+<body style="background-color:floralwhite;">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size:24px;">
+  <a class="navbar-brand" style="font-size:24px;" href="#">Навигация</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="UserIndex.html">Домашняя страница</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Информация
+        </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="About.html">О компании</a>
+                        <a class="dropdown-item" href="AdminContact.html">Контакты</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"></a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="User.html">Пользователь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Logout?login=User"></a>
+                </li>
+            </ul>
+            <!--
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+-->
+        </div>
+        <span class="navbar-text" style="margin-right:10px;">Добро пожаловать, Пользователь!</span>
+		<ul class="navbar-nav mr-auto">
+   <li class="nav-item">
+    <a  class="nav-link" style="margin-right:20px;" href="/Logout?login=User">Выйти</a>
+	</li>
+	</ul>
+    </nav>
+    <div style="height:71px; background-color: papayawhip; padding-top: 20px;">
+        <p class="h1" style="margin-left:20px; margin-top:0px; font-style:oblique; font-size:30px;">Обслуживание компьютерной техники</p>
+        <hr/>
+    </div>
+     <div style="width:90%; height:90%; background-color: white; margin-left: 60px; border: 1px solid #e9d9e9; box-shadow: 0 0 3px black; margin-top: 35px; margin-bottom: 35px; padding-bottom:50px;">
+     <h3 align="center" style="margin-top: 30px;">Компьютеры </h3>
+    <table border="1" cellpadding="1" align="center" id="computersTable" class="table table-hover" style="width:85%; border-width:3px; margin-top:30px; background-color:white;">
+		
+        <thread>
+        <tr>
+            <th>Model</th>
+            <th>OS</th>
+            <th>processor</th>
+            <th>price</th>
+            <th></th>
+        </tr>
+        </thread>
+        <tbody>
+        <tr hidden>
+            <td> </td>
+            <td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">Добавить устройство</button></td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        </tbody>
+    </table>
+          </table>
+         <h3 align="center" style="margin-top: 30px;">Ноутбуки </h3>
+    <table border="1" cellpadding="1" align="center" id="notebooksTable" class="table table-hover" style="width:85%; border-width:3px; margin-top:30px; background-color:white;">
+		
+        <thread>
+        <tr>
+            <th>Model</th>
+            <th>OS</th>
+            <th>processor</th>
+            <th>price</th>
+            <th></th>
+        </tr>
+        </thread>
+        <tbody>
+        <tr hidden>
+            <td> </td>
+            <td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal2">Добавить устройство</button></td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        </tbody>
+    </table>
+         <h3 align="center" style="margin-top: 30px;">Телефоны </h3>
+    <table border="1" cellpadding="1" align="center" id="phonesTable" class="table table-hover" style="width:85%; border-width:3px; margin-top:30px; background-color:white;">
+		
+        <thread>
+        <tr>
+            <th>Model</th>
+            <th>company</th>
+            <th>display</th>
+            <th>price</th>
+            <th></th>
+        </tr>
+        </thread>
+        <tbody>
+        <tr hidden>
+            <td> </td>
+            <td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal3">Добавить устройство</button></td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="myModal" class="modal fade" role="dialog" charset="UTF-8">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                   <h4 class="modal-title">Новое устройство</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal"></button>
+                </div>
+                <form action="AddRequest" method="post" accept-charset="UTF-8">
+                    <div class="modal-body">
+                        <p>Введите данные</p>
+                        <label>Модель:</label><input name="model" required placeholder="Samsung" type="text" size="25" maxlength="25" accept-charset="UTF-8" autofocus class="form-control"><br />
+                        <label>ОС</label>
+                        <select name="OS" class="form-control">
+                         <option value="Windows 10" selected>Windows 10</option>
+                         <option value="Windows 7">Windows 7</option>
+                         <option value="Linux">Linux</option>
+                         </select> <br />
+                        <label>Процессор:</label> <input name="processor"  type="text" size="15" maxlength="15" required class="form-control">
+                        <br /> <label>Цена:</label> <input name="price" type="text" size="15" maxlength="15" required class="form-control"><br />
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-outline-success" value="Сохранить"> <button type="button" class="btn btn-outline-danger" data-dismiss="modal"> Отмена</button>
+                    </div>    
+                </form>
+            </div>
+        </div>
+    </div>
+     </div>
+</body>
+</html>

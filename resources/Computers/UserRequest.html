@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Обслуживание компьютерной техники</title>
+    <style>
+        @import url("css/bootstrap.css");
+        @import url("css/bootstrap-grid.css");
+        @import url("css/bootstrap-reboot.css");
+        @import url("css/bootstrap-grid.min.css");
+        @import url("css/bootstrap-utilities.css");
+        @import url("css/bootstrap.rtl.css");
+        @import url("css/bootstrap.min.css");
+        @import url("js/bootstrap.bundle.js");
+        @import url("js/bootstrap.js");
+        @import url("js/bootstrap.esm.js");
+        @import url("js/bootstrap.min.js");
+
+    </style>
+</head>
+<div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</div>
+
+<body style="background-color:floralwhite;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-size:24px;">
+        <a class="navbar-brand" style="font-size:24px;" href="#">Навигация</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="UserIndex.html">Домашняя страница</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Информация
+        </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">О компании</a>
+                        <a class="dropdown-item" href="UserContact.html">Контакты</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"></a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="User.html">Пользователь</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Logout?login=User"></a>
+                </li>
+            </ul>
+            <!--
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+-->
+        </div>
+        <span class="navbar-text" style="margin-right:10px;">Добро пожаловать, Пользователь!</span>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" style="margin-right:20px;" href="/Logout?login=User">Выйти</a>
+            </li>
+        </ul>
+    </nav>
+    <div style="height:71px; background-color: papayawhip; padding-top: 20px;">
+        <p class="h1" style="margin-left:20px; margin-top:0px; font-style:oblique; font-size:30px;">Обслуживание компьютерной техники</p>
+        <hr/>
+    </div>
+    <p class="h2" style="margin-left:60px; margin-top:20px; font-style:oblique;">Заявка на ремонт</p>
+    <div style="width:90%; height:745px; background-color: white; margin-left: 60px; border: 1px solid #e9d9e9; box-shadow: 0 0 3px black; margin-top: 35px; margin-bottom: 35px;">
+        <form action="AddRequest" method="post" accept-charset="UTF-8">
+            <div class="modal-body">
+                <p class="h2" style="margin-bottom:20px;">Введите данные</p>
+                <label style="margin-bottom: 10px; font-size:20px;" class="h4">ФИО:</label><input name="FIO" required placeholder="Иванов И.И." type="text" size="25" maxlength="25" accept-charset="UTF-8" autofocus class="form-control"><br />
+                <label style="margin-bottom: 10px; font-size:20px;" class="h4">Тип Устройства:</label>
+                <select name="type" class="form-control">
+                         <option value="Компьютер" selected>Компьютер</option>
+                         <option value="Ноутбук">Ноутбук</option>
+                         <option value="Планшет">Планшет</option>
+                         <option value="Телефон">Телефон</option>
+                         </select> <br />
+                <label style="margin-bottom: 10px; font-size:20px;" class="h4">Модель:</label> <input name="model" type="text" size="15" maxlength="15" required class="form-control">
+                <br />
+                <label style="margin-bottom: 10px; font-size:20px;" class="h4">Что сломалось:</label> <input name="broken" type="text" size="15" maxlength="15" required class="form-control">
+                <br /> <label style="margin-bottom: 10px; font-size:20px;" class="h4">Контактный телефон:</label> <input name="phone" type="text" size="15" maxlength="15" required class="form-control"><br />
+                <label style="margin-bottom: 10px; font-size:20px;" class="h4">Комментарии (необязательно):</label> <input name="comment" type="text" size="150" maxlength="150" class="form-control">
+                <br />
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-outline-success" value="Отправить заявку"> <button type="button" class="btn btn-outline-danger" href="User.html" style="margin-left: 20px; margin-right: 20px;">Отмена</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

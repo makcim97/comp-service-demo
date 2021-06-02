@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Обслуживание компьютерной техники</title>
+    <style>
+        @import url("css/bootstrap.css");
+        @import url("css/bootstrap-grid.css");
+        @import url("css/bootstrap-reboot.css");
+        @import url("css/bootstrap-grid.min.css");
+        @import url("css/bootstrap-utilities.css");
+        @import url("css/bootstrap.rtl.css");
+        @import url("css/bootstrap.min.css");
+        @import url("js/bootstrap.bundle.js");
+        @import url("js/bootstrap.js");
+        @import url("js/bootstrap.esm.js");
+        @import url("js/bootstrap.min.js");
+
+    </style>
+</head>
+<div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</div>
+
+<body>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Авторизация</h4>
+                    <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal"></button>
+                    <span aria-hidden="true"></span>
+                </div>
+                <form action="Login" method="post" accept-charset="UTF-8">
+                    <div class="modal-body">
+                        <p>Введите данные</p>
+                        <label>Логин:</label> <input id="login" name="login" type="text" class="form-control" size="15" maxlength="15" required>
+                        <ruby>Неправильно введен логин!</ruby>
+                        <br />
+                        <label>Пароль:</label> <input name="password" type="password" class="form-control" size="15" maxlength="15" required><br />
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-outline-success" value="Войти">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myModal').modal('show');
+        });
+
+    </script>
+</body>
+
+</html>
